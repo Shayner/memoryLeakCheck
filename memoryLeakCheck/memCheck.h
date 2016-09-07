@@ -83,9 +83,9 @@ void* operator new(size_t size, char *pszFileName, int nLineNum);
 
 void* operator new[](size_t size, char *pszFileName, int nLineNum);
 
-void* operator delete(void* ptr);
+void operator delete(void* ptr);
 
-void* operator delete[](void* ptr);
+void operator delete[](void* ptr);
 
 extern char DELETE_FILE[ FILENAME_LENGTH ];
 extern int  DELETE_LINE;
