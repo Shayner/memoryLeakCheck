@@ -1,0 +1,110 @@
+#ifndef MemCheck_h
+#define MemCheck_h
+
+#include <map>
+#include <pthread.h>
+#include <list>
+#include <sys/wait.h>
+#include <stack>
+#include "CommonMutex.h"
+
+#define SINGLE_NEW      0x00       //分配内存:new
+#define ARRAY_NEW       0x01       //分配内存:new[]
+#define SINGLE_DELETE   0x03       //释放内存:delete
+#define ARRAY_DELETE    0x04       //释放内存:delete[]
+#define FILENAME_LENGTH 32         //文件名长度
+#define MEMORY_INFO     0x12345678 //信息队列中信息类型
+
+typedef struct {
+    char FileName[FILENAME_LENGTH];
+    unsigned long LineNum;         //行号
+    size_t AllocSize;              //分配的内存大小
+    int OperationType;
+    void* pBuffer;                 //分配后得到的内存指针
+    short errCode;                 //0 - 没有释放，1-delete了new[]分配的内存
+} MemOperation;
+
+typedef struct{
+    int Type;
+    MemOperation Data;
+}MsgBuffer;
+
+#if defined( MEM_DEBUG )
+
+class MemRecord{
+public:
+    MemRecord();              //构造函数
+
+    virtual ~MemRecord();
+
+    //插入操作
+    void Insert(void *pBuffer, MemOperation *pRecord);
+
+    //释放操作
+    void Erase(void *pBuffer, MemOperation *pRecord);
+
+    //取得消息队列号
+    int GetMsgQueue(){
+        return m_nMsgQueue;
+    }
+
+    //去得建立消息队列所用到的文件名
+
+    void GetMsgFilePath(char *path);
+
+    //取得被检测进程的pid
+    pid_t GetMainProcessPid(){
+        return m_pidMain;
+    }
+
+private:
+    pid_t m_pidMain;
+
+    map<void*, MemOperation> m_mapMemory;
+    list<MemOperation> m_listMemory;
+    
+    int m_nMsgQueue;
+
+    CCommonMutex m_mutexRecord;      //特殊的互斥锁，待研究
+
+    char m_szMsgPath[64];
+};
+
+//对delete递归嵌套删除时，记录delete operator调用所产生的文件名和行号进行保存
+
+typedef struct{
+    char     Filename[ FILENAME_LENGTH];
+    unsigned long LineNum;
+}DELINFOSTACK;
+
+#define DEBUG_NEW new(__FILE__,__LINE__)
+
+void* operator new(size_t size, char *pszFileName, int nLineNum);
+
+void* operator new[](size_t size, char *pszFileName, int nLineNum);
+
+void* operator delete(void* ptr);
+
+void* operator delete[](void* ptr);
+
+extern char DELETE_FILE[ FILENAME_LENGTH ];
+extern int  DELETE_LINE;
+extern void BuildStack();
+
+extern CCommonMutex globalLock;
+
+//先把现存的信息压入到栈中，在记录最新的文件和行号信息
+
+#define DEBUG_DELETE    globalLock.Lock();\
+                        if(DELETE_LINE != 0) BuildStack();\
+                        strncpy( DELETE_LINE,__FILE__,FILENAME_LENGTH - 1);\
+                        DELETE_FILE[ FILENAME_LENGTH - 1] = '\0';\
+                        DELETE_LINE = __LINE__;\
+                        delete;
+#else
+
+class MemRecord{};
+
+#endif
+
+#endif

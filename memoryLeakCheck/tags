@@ -1,0 +1,39 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ARRAY_DELETE	memCheck.h	14;"	d
+ARRAY_NEW	memCheck.h	12;"	d
+AllocSize	memCheck.h	/^    size_t AllocSize;              \/\/分配的内存大小$/;"	m	struct:__anon1
+CCommonMutex_h	CommonMutex.h	2;"	d
+DEBUG_DELETE	memCheck.h	96;"	d
+DEBUG_NEW	memCheck.h	80;"	d
+DELINFOSTACK	memCheck.h	/^}DELINFOSTACK;$/;"	t	typeref:struct:__anon3
+Data	memCheck.h	/^    MemOperation Data;$/;"	m	struct:__anon2
+FILENAME_LENGTH	memCheck.h	15;"	d
+FileName	memCheck.h	/^    char FileName[FILENAME_LENGTH];$/;"	m	struct:__anon1
+Filename	memCheck.h	/^    char     Filename[ FILENAME_LENGTH];$/;"	m	struct:__anon3
+GetMainProcessPid	memCheck.h	/^    pid_t GetMainProcessPid(){$/;"	f	class:MemRecord
+GetMsgQueue	memCheck.h	/^    int GetMsgQueue(){$/;"	f	class:MemRecord
+LineNum	memCheck.h	/^    unsigned long LineNum;         \/\/行号$/;"	m	struct:__anon1
+LineNum	memCheck.h	/^    unsigned long LineNum;$/;"	m	struct:__anon3
+MEMORY_INFO	memCheck.h	16;"	d
+MemCheck_h	memCheck.h	2;"	d
+MemOperation	memCheck.h	/^} MemOperation;$/;"	t	typeref:struct:__anon1
+MemRecord	memCheck.h	/^class MemRecord{$/;"	c
+MemRecord	memCheck.h	/^class MemRecord{};$/;"	c
+MsgBuffer	memCheck.h	/^}MsgBuffer;$/;"	t	typeref:struct:__anon2
+OperationType	memCheck.h	/^    int OperationType;$/;"	m	struct:__anon1
+SINGLE_DELETE	memCheck.h	13;"	d
+SINGLE_NEW	memCheck.h	11;"	d
+Type	memCheck.h	/^    int Type;$/;"	m	struct:__anon2
+errCode	memCheck.h	/^    short errCode;                 \/\/0 - 没有释放，1-delete了new[]分配的内存$/;"	m	struct:__anon1
+m_listMemory	memCheck.h	/^    list<MemOperation> m_listMemory;$/;"	m	class:MemRecord
+m_mapMemory	memCheck.h	/^    map<void*, MemOperation> m_mapMemory;$/;"	m	class:MemRecord
+m_mutexRecord	memCheck.h	/^    CCommonMutex m_mutexRecord;      \/\/特殊的互斥锁，待研究$/;"	m	class:MemRecord
+m_nMsgQueue	memCheck.h	/^    int m_nMsgQueue;$/;"	m	class:MemRecord
+m_pidMain	memCheck.h	/^    pid_t m_pidMain;$/;"	m	class:MemRecord
+m_szMsgPath	memCheck.h	/^    char m_szMsgPath[64];$/;"	m	class:MemRecord
+pBuffer	memCheck.h	/^    void* pBuffer;                 \/\/分配后得到的内存指针$/;"	m	struct:__anon1
